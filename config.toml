@@ -1,6 +1,6 @@
 baseurl = "https://www.codepensive.com"
 title = "Codepensive.com"
-theme = "hugo-theme-cleanwhite"
+theme = "hugo-theme-cleanwhite2"
 languageCode = "en-us"
 # Enable comments by entering your Disqus shortname
 disqusShortname = ""
@@ -23,7 +23,7 @@ home = ["HTML", "RSS", "Algolia"]
   leancloud_app_key = ""
 
   # algolia site search
-  algolia_search = false 
+  algolia_search = false
   algolia_appId = ""
   algolia_indexName = ""
   algolia_apiKey = ""
@@ -32,18 +32,18 @@ home = ["HTML", "RSS", "Algolia"]
   sidebar_about_description = "Software Developer, Open Source Enthusiast and Life Adventurer"
   sidebar_avatar = "img/avatar-zhaohuabing.jpg"      # use absolute URL, seeing it's used in both `/` and `/about/`
 
-  featured_tags = true 
-  featured_condition_size = 2 
+  featured_tags = true
+  featured_condition_size = 2
 
   # Baidu Analytics
   ba_track_id = ""
-  
+
   # We need a proxy to access Disqus api in China
   disqus_proxy = ""
   disqus_site = ""
 
   [params.social]
-  rss            = true 
+  rss            = true
   email          = "youemail@gmail.com"
   #facebook      = "full profile url in facebook"
   #googleplus    = "full profile url in googleplus"
@@ -54,7 +54,7 @@ home = ["HTML", "RSS", "Algolia"]
   github         = "full profile url in github"
   wechat         = "link of wechat QR code image"
   #pinterest     = "full profile url in pinterest"
-  
+
   [[params.friend_link]]
   title = "Linda的博客"
   href =  "https://zhaozhihan.com"
@@ -71,7 +71,7 @@ home = ["HTML", "RSS", "Algolia"]
   [[params.bookmark_link]]
   title =  "Image Compression"
   href = "https://tinypng.com"
-  
+
 [outputFormats.Algolia]
 baseName = "algolia"
 isPlainText = true
@@ -80,4 +80,4 @@ notAlternative = true
 
 [params.algolia]
 vars = ["title", "summary", "date", "publishdate", "expirydate", "permalink"]
-params = ["categories", "tags"] 
+params = ["categories", "tags"]
