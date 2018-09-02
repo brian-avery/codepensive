@@ -1,4 +1,4 @@
-baseurl = "https://www.codepensive.com"
+baseurl = "/"
 title = "Codepensive.com"
 theme = "hugo-theme-cleanwhite"
 languageCode = "en-us"
