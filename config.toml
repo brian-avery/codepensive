@@ -1,6 +1,6 @@
 baseurl = "https://www.codepensive.com"
 title = "Codepensive.com"
-theme = "hugo-theme-cleanwhite2"
+theme = "hugo-theme-cleanwhite"
 languageCode = "en-us"
 # Enable comments by entering your Disqus shortname
 disqusShortname = ""
