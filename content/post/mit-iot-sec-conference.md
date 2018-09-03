@@ -5,6 +5,7 @@ date:       2016-03-10
 author:     "Brian Avery"
 URL: "/2017/03/10/mit-iot-sec-conference"
 image:      "https://img.zhaohuabing.com/post-bg-2015.jpg"
+categories:  ["Security" ]
 ---
 
 

@@ -1,5 +1,5 @@
 baseurl = "/"
-title = "Codepensive.com"
+title = "Codepensive"
 theme = "hugo-theme-cleanwhite"
 languageCode = "en-us"
 # Enable comments by entering your Disqus shortname
@@ -34,13 +34,6 @@ home = ["HTML", "RSS", "Algolia"]
 
   featured_tags = true
   featured_condition_size = 2
-
-  # Baidu Analytics
-  ba_track_id = ""
-
-  # We need a proxy to access Disqus api in China
-  disqus_proxy = ""
-  disqus_site = ""
 
   [params.social]
   rss            = true
@@ -77,3 +70,8 @@ notAlternative = true
 [params.algolia]
 vars = ["title", "summary", "date", "publishdate", "expirydate", "permalink"]
 params = ["categories", "tags"]
+
+[taxonomies]
+   tag = "tags"
+   category = "categories"
+

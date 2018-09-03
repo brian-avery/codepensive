@@ -28,11 +28,6 @@
                         </a>
                     </li>
                     {{ end }}
-                    {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
-                    <li>
-                        <a href="{{ "categories/" | absLangURL }}{{ $name | urlize }}">{{ $name }}</a>
-                    </li>
-                    {{ end }}
 
                     {{ if .Site.Params.algolia_search }}
 		            <li>

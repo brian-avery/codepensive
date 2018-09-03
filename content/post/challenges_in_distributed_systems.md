@@ -6,6 +6,7 @@ date:       2017-10-30
 author:     "Brian Avery"
 URL: "/2017/10/30/challenges-in-distributed-systems/"
 image:      "https://img.zhaohuabing.com/post-bg-2015.jpg"
+categories:  ["Containers", "Microservices" ]
 ---
 
 Distributed services are messy. You have network issues, errors in processing, and a range of other problems that occur. Take the problems of a traditional program and increase them with the number of processes. Now think of communication between these problems. Now you're starting to understand some of the challenges in distributed programming. But, these problems are precisely what makes distributed programming so fun.

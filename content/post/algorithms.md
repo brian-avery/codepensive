@@ -5,6 +5,7 @@ date:       2017-10-22
 author:     "Brian Avery"
 URL: "/2017/10/22/algorithms/"
 image:      "https://img.zhaohuabing.com/post-bg-2015.jpg"
+categories:  ["Go", "Algorithms" ]
 ---
 
 On my list of things to study this year is algorithms. I'd like to cover sorting, graphs, trees, and search algorithms as well as data structures.

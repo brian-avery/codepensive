@@ -5,6 +5,7 @@ date:       2017-10-08
 author:     "Brian Avery"
 URL: "/2017/10/08/why-simple-programs-are-important/"
 image:      "https://img.zhaohuabing.com/post-bg-2015.jpg"
+categories:  ["Clean Programming" ]
 ---
 In his talk <a href="https://www.youtube.com/watch?v=rFejpH_tAHM">Simplicity is Complicated </a>from dotGo 2015, Rob Pike states that readable code is reliable code; it's easier to understand, easier to work on, and easier to fix when it breaks.
 

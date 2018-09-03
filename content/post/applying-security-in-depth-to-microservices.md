@@ -5,6 +5,7 @@ date:       2017-10-08
 author:     "Brian Avery"
 URL: "/2017/10/08/thoughts-on-applying-security-in-depth-to-microservices"
 image:      "https://img.zhaohuabing.com/post-bg-2015.jpg"
+categories:  ["Security" ]
 ---
 
 The world of microservices divides programs up into several chunks. With this division comes several questions one of which is the security vs load. If each of your services verify a user token against an authentication system, then that creates a lot of load. If you verify at the perimeter of your network, then you've verified that the user is valid at the the perimeter of your network, and if no other services other than the services that are verifying authentication are exposed, you're safe right? What happens if your network is compromised though?
