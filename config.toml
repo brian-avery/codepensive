@@ -3,16 +3,17 @@ title = "Codepensive.com"
 theme = "hugo-theme-cleanwhite"
 languageCode = "en-us"
 # Enable comments by entering your Disqus shortname
-disqusShortname = ""
+disqusShortname = "codepensive"
 googleAnalytics = ""
 preserveTaxonomyNames = true
 paginate = 5 #frontpage pagination
-hasCJKLanguage = true
 
 [outputs]
 home = ["HTML", "RSS", "Algolia"]
 
+
 [params]
+  showtoc = false
   header_image = "img/cropped-markus-spiske-207946.jpg"
 
   image_404 = "img/404-bg.jpg"
@@ -54,18 +55,6 @@ home = ["HTML", "RSS", "Algolia"]
   #wechat         = "link of wechat QR code image"
   #pinterest     = "full profile url in pinterest"
 
-  [[params.bookmark_link]]
-  title =  "Martin Fowler"
-  href =  "https://martinfowler.com"
-  [[params.bookmark_link]]
-  title = "ServiceMesh中文网"
-  href =  "http://www.servicemesh.cn"
-  [[params.bookmark_link]]
-  title = "Awesome Service Mesh"
-  href = "https://servicemesh.gitbooks.io/awesome-servicemesh"
-  [[params.bookmark_link]]
-  title =  "Image Compression"
-  href = "https://tinypng.com"
 
 [outputFormats.Algolia]
 baseName = "algolia"
