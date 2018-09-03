@@ -55,6 +55,18 @@ home = ["HTML", "RSS", "Algolia"]
   #wechat         = "link of wechat QR code image"
   #pinterest     = "full profile url in pinterest"
 
+  # Initial site menu, you can extend menu with content.
+[[menu.main]]
+  name = "Home"
+  weight = 1
+  identifier = "home"
+  url = "/"
+
+[[menu.main]]
+  name = "Work History"
+  weight = 2
+  identifier = "work history"
+  url = "/work-history"
 
 [outputFormats.Algolia]
 baseName = "algolia"
