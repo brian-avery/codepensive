@@ -58,7 +58,7 @@ GDB expects to find your .debuginfo file in the same directory as your binary. I
 
 
 == Attaching the debugger to a running process
-As long as you’ve been following along so far, you have your debug info in the proper directory. Now, do a ``pgrep crashdummy`` to get your process ID and do a dlv attach. The debugger should now open. 
+As long as you’ve been following along so far, you have your debug info in the proper directory. Now, do a ``pgrep crashdummy`` to get your process ID and do a gdb -p. The debugger should now open. 
 
 [source, bash]
 ----
