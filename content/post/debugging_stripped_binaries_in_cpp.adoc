@@ -11,7 +11,7 @@ categories:  ["C++", "Debugging", "Containers" ]
 Sometimes it's necessary to strip debugging information before shipping binaries for space or security reasons. However, this can make it more painful to debug these containers if not done properly.
 
 == Stripping Binaries
-NOTE: Make sure to build binaries with debug info included: {{< highlight bash >}} g++ -ggdb main.cpp -o crashdummycpp+ {{</highlight>}} This is included by default in Go, but not in C++. Either way, when the binary gets stripped, everything is moved to the .debug file.
+NOTE: Make sure to build binaries with debug info included: {{< highlight bash >}} g++ -ggdb main.cpp -o crashdummycpp {{</highlight>}} This is included by default in Go, but not in C++. Either way, when the binary gets stripped, everything is moved to the .debug file.
 
 Lets view the information about our binary.
 [source, bash]
