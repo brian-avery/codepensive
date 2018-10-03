@@ -1,0 +1,93 @@
+{{ define "header" }}
+<!-- Post Header -->
+DND
+<style type="text/css">
+    header.intro-header{
+        background: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ), url('{{ .Site.Params.header_image | absURL }}');">
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                       {{ range .Params.tags }}
+                       <a class="tag" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" title="{{ . }}">
+                           {{ . }}
+                        </a>
+                        {{ end }}
+                    </div>
+                    <h1>{{ .Title }}</h1>
+                    <h2 class="subheading">{{ .Params.subtitle }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{{ end }}
+
+{{ define "main" }}
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+		{{ .Content }}
+
+                <hr>
+                 {{ partial "comments.html" . }}
+
+                <hr>
+
+                <ul class="pager">
+                    {{ if .Prev }}
+                    <li class="previous">
+                        <a href="{{ .Prev.URL }}" data-toggle="tooltip" data-placement="top" title="{{ .Prev.Title}}">&larr; Previous Post</a>
+                    </li>
+                    {{ end }}
+                    {{ if .Next }}
+                    <li class="next">
+                        <a href="{{ .Next.URL }}" data-toggle="tooltip" data-placement="top" title="{{ .Next.Title}}">Next Post &rarr;</a>
+                    </li>
+                    {{ end }}
+                </ul>
+
+
+            </div>
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                    {{ $featured_condition_size := .Site.Params.featured_condition_size }}
+                    {{ range $name, $taxonomy := .Site.Taxonomies.tags }}
+                       {{ if gt (len $taxonomy.Pages) $featured_condition_size }}
+                            <a href="{{ "/tags/" | relLangURL }}{{ $name | urlize }}" title="{{ $name }}">
+                                {{ $name }}
+                            </a>
+                       {{ end }}
+                    {{ end }}
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+{{ end }}
+
+
