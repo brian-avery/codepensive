@@ -1,0 +1,35 @@
+---
+layout:     post
+title:      "Mixer Code Deep Dive"
+date:       2018-10-09
+author:     "Brian Avery"
+URL:        "/2018/10/09/mixer_technical_deep_dive/"
+image:      "https://img.zhaohuabing.com/post-bg-2015.jpg"
+categories:  ["Go", "Debugging", "Istio", "Code Deep Dive" ]
+---
+
+While debugging an issue in Mixer, I did a deep dive through the code to figure out how everything works. You can read about my findings below. 
+
+## Monitoring K8S Configuration
+Mixer keeps a go routine running to watch for configuration changes and loads them as they are detected. 
+
+When Mixer first starts up, it calls link:https://github.com/istio/istio/blob/master/mixer/pkg/server/server.go#L113[newServer] which initializes the service. As part of this, it creates a new runtime, which calls link:https://github.com/istio/istio/blob/master/mixer/pkg/runtime/runtime.go#L153[processNewConfig] for the first time. Mixer adds a link:https://github.com/istio/istio/blob/master/mixer/pkg/runtime/runtime.go#L123[watcher] which watches for changes and stores them in a channel as they occur. At a predefined interval, currently 1 second, mixer will update it's config with any new changes before calling link:https://github.com/istio/istio/blob/master/mixer/pkg/runtime/runtime.go#L150[processNewConfig] again. 
+
+By default, mixer watches k8s://, but this can be overriden with the command line flag --configStoreURL. Valid paths include k8s://path for a kubeconfig location, fs://path for a file system location, and mcps://host to connect to Galley.
+```
+$GOPATH/out/linux_amd64/release/mixs server --configStoreURL=fs://$(pwd)/testdata
+```
+
+## Handling Incoming Events With Adapters
+Mixer uses GRPC to communicate with both Envoy and Adapaters. The adapters are defined link:https://github.com/istio/istio/tree/master/mixer/adapter[here] and implement templates defined link:https://github.com/istio/istio/tree/master/mixer/template[here]. The API for mixer itself is defined link:https://github.com/istio/api/blob/master/mixer/v1/service.proto[here]. Envoy communicates with Mixer using the client defined link:https://github.com/istio/proxy/blob/master/src/istio/mixerclient/client_impl.cc[here].
+
+Events come to the link:https://github.com/istio/istio/blob/master/mixer/pkg/runtime/dispatcher/dispatcher.go#L119[check] implementation of the link:https://github.com/istio/istio/blob/master/mixer/pkg/runtime/dispatcher/dispatcher.go#L36[dispatcher] interface. From here we go to dispatch, which finds destinations (adapters), and forwards requests off to the destinations matching the namespace and type in link:https://github.com/istio/istio/blob/master/mixer/pkg/runtime/dispatcher/session.go#L105[parallel]. If no adapters are found, check returns a default value.
+
+
+
+
+
+
+
+
+

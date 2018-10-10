@@ -99,7 +99,7 @@
     <h5>Categories</h5>
     {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
     <li>
-        <a href="{{ " categories/ " | absLangURL }}{{ $name | urlize }}">{{ $name }}</a>
+        <a href="{{ "categories/" | absLangURL }}{{ $name | urlize }}">{{ $name }}</a>
     </li>
     {{ end }}
 
