@@ -1,0 +1,193 @@
+
+# How does Envoy get started?
+The istio-proxyv2 images. These are pilot-agent and envoy itself. The container uses pilot-agent as it's entrypoint. Pilot-agent's job is to generate a bootstrap configuration for envoy as well as to watch for certificate changes and configure Envoy appropriately when changes are detected.
+
+# Bootstrap Config Generation
+To generate the bootstrap config, https://github.com/istio/istio/blob/622467a1e294b689e0071f7373200edc4a168c26/pilot/pkg/proxy/envoy/proxy.go#L92[Run] checks to see if there is a custom configuration already present. If not, then it calls https://sourcegraph.com/github.com/istio/istio@d3eed9a347ad02f0b79e3f92330878f88953cf64/-/blob/pkg/bootstrap/bootstrap_config.go#L187[WriteBootstrap] which takes the template https://github.com/istio/istio/blob/d3eed9a347ad02f0b79e3f92330878f88953cf64/tools/deb/envoy_bootstrap_v2.json[here] and uses it to generate the bootstrap config before passing it in the -c argument to the envoy binary, which starts up and contacts Pilot.
+
+A sample bootstrap configuration can be seen below:
+```
+{
+  "node": {
+    "id": "router~10.128.1.120~istio-ingressgateway-7fbc7fd9bf-jq2mr.istio-system~istio-system.svc.cluster.local",
+    "cluster": "istio-ingressgateway",
+
+    "metadata": {"POD_NAME":"istio-ingressgateway-7fbc7fd9bf-jq2mr","istio":"sidecar"}
+    },
+    "stats_config": {
+    "use_all_default_tags": false,
+    "stats_tags": [{
+        "tag_name": "cluster_name",
+        "regex": "^cluster\\.((.+?(\\..+?\\.svc\\.cluster\\.local)?)\\.)"
+      },
+      {
+        "tag_name": "tcp_prefix",
+        "regex": "^tcp\\.((.*?)\\.)\\w+?$"
+      },
+      {
+        "tag_name": "response_code",
+        "regex": "_rq(_(\\d{3}))$"
+      },
+      {
+        "tag_name": "response_code_class",
+        "regex": "_rq(_(\\dxx))$"
+      },
+      {
+        "tag_name": "http_conn_manager_listener_prefix",
+        "regex": "^listener(?=\\.).*?\\.http\\.(((?:[_.[:digit:]]*|[_\\[\\]aAbBcCdDeEfF[:digit:]]*))\\.)"
+      },
+      {
+        "tag_name": "http_conn_manager_prefix",
+        "regex": "^http\\.(((?:[_.[:digit:]]*|[_\\[\\]aAbBcCdDeEfF[:digit:]]*))\\.)"
+      },
+      {
+        "tag_name": "listener_address",
+        "regex": "^listener\\.(((?:[_.[:digit:]]*|[_\\[\\]aAbBcCdDeEfF[:digit:]]*))\\.)"
+      }
+    ]
+  },
+  "admin": {
+    "access_log_path": "/dev/null",
+    "address": {
+      "socket_address": {
+        "address": "127.0.0.1",
+        "port_value": 15000
+      }
+    }
+  },
+  "dynamic_resources": {
+    "lds_config": {
+        "ads": {}
+    },
+    "cds_config": {
+        "ads": {}
+    },
+    "ads_config": {
+      "api_type": "GRPC",
+      "refresh_delay": "1s",
+      "grpc_services": [
+        {
+          "envoy_grpc": {
+            "cluster_name": "xds-grpc"
+          }
+        }
+      ]
+    }
+  },
+  "static_resources": {
+    "clusters": [
+    {
+      "name": "prometheus_stats",
+      "type": "STATIC",
+      "connect_timeout": "0.250s",
+      "lb_policy": "ROUND_ROBIN",
+      "hosts": [{
+        "socket_address": {
+          "protocol": "TCP",
+          "address": "127.0.0.1",
+          "port_value": 15000,
+        }
+      }],
+    },
+    {
+    "name": "xds-grpc",
+    "type": "STRICT_DNS",
+    "connect_timeout": "10s",
+    "lb_policy": "ROUND_ROBIN",
+
+    "hosts": [
+    {
+    "socket_address": {"address": "istio-pilot", "port_value": 15010}
+    }
+    ],
+    "circuit_breakers": {
+        "thresholds": [
+      {
+        "priority": "DEFAULT",
+        "max_connections": 100000,
+        "max_pending_requests": 100000,
+        "max_requests": 100000
+      },
+      {
+        "priority": "HIGH",
+        "max_connections": 100000,
+        "max_pending_requests": 100000,
+        "max_requests": 100000
+      }]
+    },
+    "upstream_connection_options": {
+      "tcp_keepalive": {
+        "keepalive_time": 300
+      }
+    },
+    "http2_protocol_options": { }
+    }
+
+
+    ,
+      {
+        "name": "zipkin",
+        "type": "STRICT_DNS",
+        "connect_timeout": "1s",
+        "lb_policy": "ROUND_ROBIN",
+        "hosts": [
+          {
+            "socket_address": {"address": "zipkin", "port_value": 9411}
+          }
+        ]
+      }
+
+    ],
+   "listeners":[
+      {
+        "address": {
+          "socket_address": {
+            "protocol": "TCP",
+            "address": "0.0.0.0",
+            "port_value": 15090,
+          }
+        },
+        "filter_chains": [{
+          "filters": [{
+            "name": "envoy.http_connection_manager",
+            "config": {
+              "codec_type": "AUTO",
+              "stat_prefix": "stats",
+              "route_config": {
+                "virtual_hosts": [{
+                  "name": "backend",
+                  "domains": [
+                    "*"
+                  ],
+                  "routes": [{
+                    "match": {
+                      "prefix": "/stats/prometheus"
+                    },
+                    "route": {
+                      "cluster": "prometheus_stats"
+                    }
+                  }]
+                }]
+              },
+              "http_filters": {
+                "name": "envoy.router"
+              }
+            }
+          }]
+        }],
+      },
+    ],
+  },
+
+  "tracing": {
+    "http": {
+      "name": "envoy.zipkin",
+      "config": {
+        "collector_cluster": "zipkin"
+      }
+    }
+  },
+
+
+ }
+```
