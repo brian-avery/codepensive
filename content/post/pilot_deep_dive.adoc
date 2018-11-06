@@ -1,3 +1,12 @@
+---
+layout:     post
+title:      "Pilot Code Deep Dive"
+date:       2018-11-06
+author:     "Brian Avery"
+URL:        "/2018/10/09/mixer_technical_deep_dive/"
+image:      "https://img.zhaohuabing.com/post-bg-2015.jpg"
+categories:  ["Go", "Debugging", "Istio", "Code Deep Dive" ]
+---
 
 # How does Envoy get started?
 The istio-proxyv2 images. These are pilot-agent and envoy itself. The container uses pilot-agent as it's entrypoint. Pilot-agent's job is to generate a bootstrap configuration for envoy as well as to watch for certificate changes and configure Envoy appropriately when changes are detected.
