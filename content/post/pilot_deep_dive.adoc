@@ -8,10 +8,10 @@ image:      "https://img.zhaohuabing.com/post-bg-2015.jpg"
 categories:  ["Go", "Debugging", "Istio", "Code Deep Dive" ]
 ---
 
-# How does Envoy get started?
+## How does Envoy get started?
 The istio-proxyv2 images. These are pilot-agent and envoy itself. The container uses pilot-agent as it's entrypoint. Pilot-agent's job is to generate a bootstrap configuration for envoy as well as to watch for certificate changes and configure Envoy appropriately when changes are detected.
 
-# Bootstrap Config Generation
+## Bootstrap Config Generation
 To generate the bootstrap config, https://github.com/istio/istio/blob/622467a1e294b689e0071f7373200edc4a168c26/pilot/pkg/proxy/envoy/proxy.go#L92[Run] checks to see if there is a custom configuration already present. If not, then it calls https://sourcegraph.com/github.com/istio/istio@d3eed9a347ad02f0b79e3f92330878f88953cf64/-/blob/pkg/bootstrap/bootstrap_config.go#L187[WriteBootstrap] which takes the template https://github.com/istio/istio/blob/d3eed9a347ad02f0b79e3f92330878f88953cf64/tools/deb/envoy_bootstrap_v2.json[here] and uses it to generate the bootstrap config before passing it in the -c argument to the envoy binary, which starts up and contacts Pilot.
 
 A sample bootstrap configuration can be seen below:
