@@ -3,7 +3,7 @@ layout:     post
 title:      "Istio: Pilot Deep Dive"
 date:       2018-11-06
 author:     "Brian Avery"
-URL:        "/2018/11/06/istio_bootstrapping_envoy/"
+URL:        "/2018/11/06/istio_p[ilot_technical_deep_dive/"
 image:      "https://img.zhaohuabing.com/post-bg-2015.jpg"
 categories:  ["Go", "Debugging", "Istio", "Pilot", "Code Deep Dive" ]
 ---
