@@ -13,4 +13,4 @@ This article is a landing page for a series of articles that I write as I dive i
 
 Articles
 --------
-* Bootstrapping Envoy [bootstrapping_envoy.adoc]
+* bootstrapping_envoy.adoc[Bootstrapping Envoy]
